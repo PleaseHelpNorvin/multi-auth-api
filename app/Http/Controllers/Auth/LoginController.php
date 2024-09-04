@@ -46,7 +46,8 @@ class LoginController extends ApiController
                 return response()->json([
                     'message' => 'Admin logged in successfully',
                     'token' => $token,
-                    'role' => 'admin'
+                    'role' => 'admin',
+                    'redirect' => '/home/admin'
                 ], 200);
             }
 
@@ -54,7 +55,8 @@ class LoginController extends ApiController
                 return response()->json([
                     'message' => 'User logged in successfully',
                     'token' => $token,
-                    'role' => 'user'
+                    'role' => 'user',
+                    'redirect' => '/home/user'
                 ], 200);
             }
 
