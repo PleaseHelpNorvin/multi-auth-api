@@ -11,14 +11,14 @@ Route::post('/login',[LoginController::class, 'login'])->name('login');
 Route::post('/register',[RegisterController::class, 'register'])->name('register');
 
 Route::middleware('auth:sanctum')->group(function(){
-    Route::get('/user', function (Request $request) {
+    Route::get('/profile/user', function (Request $request) {
         return $request->user();
     });
 });
 
 Route::middleware('auth:sanctum', AdminMiddleware::class)->group(function(){
 
-    Route::get('/admin', function (Request $request) {
+    Route::get('/profile/admin', function (Request $request) {
         return $request->user();
     }); 
 });
