@@ -10,26 +10,10 @@ use Illuminate\Http\Request;
 
 class LoginController extends ApiController
 {
-    //
     public function login(Request $request)
     {
-       
-        // $request->validate([
-        //     'email' => 'required|email',
-        //     'password' => 'required',
-        // ]);
-
-        // $user = User::where('email', $request->email)->first();
-        // if(!$user || !Hash::check($request->password, $user->password))
-        // {
-        //     return $this->errorResponse('The provided credentials are incorrect.');
-        // }
-
-        // $token = $user->createToken($user->role)->plainTextToken;
-        // return $this->successResponse(['token'=>$token]);
-
-         // Validate incoming request
-         $credentials = $request->validate([
+        // Validate incoming request
+        $credentials = $request->validate([
             'email' => 'required|email',
             'password' => 'required',
         ]);
@@ -43,31 +27,22 @@ class LoginController extends ApiController
 
             // Determine role and respond accordingly
             if ($user->isAdmin()) {
-                return response()->json([
-                    'message' => 'Admin logged in successfully',
+                return $this->successResponse([
                     'token' => $token,
-                    'role' => 'admin',
-                    'redirect' => '/home/admin'
-                ], 200);
+                    'role' => 'admin'
+                ], 'Admin logged in successfully');
             }
 
             if ($user->isUser()) {
-                return response()->json([
-                    'message' => 'User logged in successfully',
+                return $this->successResponse([
                     'token' => $token,
-                    'role' => 'user',
-                    'redirect' => '/home/user'
-                ], 200);
+                    'role' => 'user'
+                ], 'User logged in successfully');
             }
-
-            return response()->json([
-                'message' => 'Unauthorized',
-            ], 401);
+            return $this->forbiddenResponse(null, 'Unauthorized');
         }
 
         // Return error if authentication fails
-        return response()->json([
-            'message' => 'Invalid credentials',
-        ], 401);
+        return $this->errorResponse(null, 'Invalid credentials');
     }
 }
