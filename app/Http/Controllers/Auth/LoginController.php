@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Auth;
 
 use App\Models\User;
-use Illuminate\Http\Request;
+use App\Http\Controllers\ApiController;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Http\Request;
 
-class AuthController extends ApiController
+class LoginController extends ApiController
 {
     //
     public function login(Request $request)
@@ -25,5 +26,4 @@ class AuthController extends ApiController
         $token = $user->createToken($user->role)->plainTextToken;
         return $this->successResponse(['token'=>$token]);
     }
-
 }

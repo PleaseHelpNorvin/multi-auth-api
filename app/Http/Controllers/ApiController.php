@@ -14,7 +14,7 @@ class ApiController extends Controller
             'data' => $data
         ], $status);
     }
-    protected function errorResponse ($message='Error', $status = 401)
+    protected function errorResponse ($data = null, $message='Error', $status = 401)
     {
         return response()->json([
             'message' => $message,
