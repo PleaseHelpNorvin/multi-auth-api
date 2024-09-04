@@ -6,10 +6,14 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\AdminMiddleware;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\Auth\LogoutController;
+//use App\Http\Controllers\Errors\ErrorPagesControllers;
 use App\Http\Controllers\HomeController;
+
 
 Route::post('/login',[LoginController::class, 'login'])->name('login');
 Route::post('/register',[RegisterController::class, 'register'])->name('register');
+
 
 Route::middleware('auth:sanctum')->group(function(){
     //user profile
@@ -18,6 +22,8 @@ Route::middleware('auth:sanctum')->group(function(){
     });
     //user dashboard
     Route::get('/home/user', [HomeController::class, 'userHome']);
+    //logout
+    Route::post('/logout', [LogoutController::class, 'logout'])->name('logout');
 });
 
 Route::middleware('auth:sanctum', AdminMiddleware::class)->group(function(){
