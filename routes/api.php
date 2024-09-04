@@ -10,18 +10,15 @@ use App\Http\Controllers\Auth\RegisterController;
 Route::post('/login',[LoginController::class, 'login'])->name('login');
 Route::post('/register',[RegisterController::class, 'register'])->name('register');
 
-Route::get('/user', function (Request $request) {
-    return $request->user();
-})->middleware('auth:sanctum');
-
-// Route::get('/admin', function (Request $request) {
-//     return $request->user();
-// })->middleware('auth:sanctum', AdminMiddleware::class);
+Route::middleware('auth:sanctum')->group(function(){
+    Route::get('/user', function (Request $request) {
+        return $request->user();
+    });
+});
 
 Route::middleware('auth:sanctum', AdminMiddleware::class)->group(function(){
 
     Route::get('/admin', function (Request $request) {
         return $request->user();
-    });
-    
+    }); 
 });
