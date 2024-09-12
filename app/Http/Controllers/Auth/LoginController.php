@@ -22,6 +22,9 @@ class LoginController extends ApiController
         if (Auth::attempt($credentials)) {
             $user = Auth::user();
 
+            // Revoke all previous tokens
+            $user->tokens()->delete();
+
             // Generate a token for the user
             $token = $user->createToken('Personal Access Token')->plainTextToken;
 
